@@ -5,7 +5,7 @@ const { productsModel } = require('../../../src/models');
 
 const { productsService } = require('../../../src/services');
 
-const { products, productId } = require('../mocks/products.mock');
+const { products, productId, resultInsertProduct, insertProduct } = require('../mocks/products.mock');
 
 describe('Products Service', function () {
   describe('Lista todos os produtos, testando função getAll()', function () {
@@ -29,9 +29,6 @@ describe('Products Service', function () {
   });
 
   describe('Lista o produto pelo seu id, testando função getById()', function () {
-    afterEach(function () {
-      sinon.restore();
-    });
     it('retorna a pessoa passageira caso ID existente', async function () {
       sinon.stub(productsModel, 'getById').resolves(productId[0]);
       
@@ -48,6 +45,26 @@ describe('Products Service', function () {
 
       expect(result.type).to.equal(404);
       expect(result.message).to.deep.equal('Product not found');
+    });
+
+    afterEach(function () {
+      sinon.restore();
+    });
+  });
+
+  describe('cadastro de uma pessoa passageira com valores válidos', function () {
+    it('retorna o ID da pessoa passageira cadastrada', async function () {
+      sinon.stub(productsModel, 'insert').resolves(1);
+      sinon.stub(productsModel, 'getById').resolves(resultInsertProduct);
+      
+      const result = await productsService.insert(insertProduct);
+
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal(resultInsertProduct);
+    });
+
+    afterEach(function () {
+      sinon.restore();
     });
   });
 });

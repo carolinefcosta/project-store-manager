@@ -10,7 +10,7 @@ const { productsController } = require('../../../src/controllers');
 
 const { productsService } = require('../../../src/services');
 
-const { products, productId } = require('../mocks/products.mock');
+const { products, productId, insertProduct, resultInsertProduct } = require('../mocks/products.mock');
 
 describe('Products Controller', function () {
   describe('Lista todos os produtos, testando função getAll()', function () {
@@ -75,6 +75,26 @@ describe('Products Controller', function () {
 
       expect(res.status).to.have.been.calledWith(404);
       expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
+    });
+  });
+
+  describe('Cadastrando um novo produto, testa função insert()', function () {
+    it('ao enviar dados válidos deve salvar com sucesso!', async function () {
+      const res = {};
+      const req = {
+        body: insertProduct,
+      };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(productsService, 'insert')
+        .resolves({ type: null, message: resultInsertProduct });
+
+      await productsController.insert(req, res);
+
+      expect(res.status).to.have.been.calledWith(201);
+      expect(res.json).to.have.been.calledWith(resultInsertProduct);
     });
   });
 });

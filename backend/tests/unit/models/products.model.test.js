@@ -5,7 +5,7 @@ const connection = require('../../../src/models/connection');
 
 const { productsModel } = require('../../../src/models');
 
-const { products, productId,
+const { products, productId, insertProduct,
 } = require('../mocks/products.mock');
 
 describe('Products Model', function () {
@@ -39,23 +39,23 @@ describe('Products Model', function () {
 
       expect(result).to.deep.equal(productId);
     });
+
+    afterEach(function () {
+      sinon.restore();
+    });
   });
 
-  // describe('Cadastra um novo produto', function () {
-  //   afterEach(function () {
-  //     sinon.restore();
-  //   });
+  describe('Cadastra um novo produto', function () {
+    it('Cadastrando uma pessoa passageira', async function () {
+      sinon.stub(connection, 'execute').resolves([{ insertId: 42 }]);
+      
+      const result = await productsModel.insert(insertProduct);
+      
+      expect(result).to.equal(42);
+    });
 
-  //   const expected = 1;
-
-  //   it('com sucesso', async function () {
-  //     const execute = [{ insertId: 1 }];
-
-  //     sinon.stub(connection, 'execute').resolves(execute);
-
-  //     const response = await productsModel.insert(insertProduct);
-
-  //     expect(response).to.equal(expected);
-  //   });
-  // });
+    afterEach(function () {
+      sinon.restore();
+    });
+  });
 });

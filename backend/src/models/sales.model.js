@@ -29,6 +29,16 @@ const getById = async (id) => {
   return result;
 };
 
+// const insert = async () => {
+//   const query = 'INSERT INTO sales_products (product_id, quantity) VALUES (?, ?)';
+
+//   const [result] = await connection.execute(query, [product_id, quantity]);
+
+//   const query = `INSERT INTO sales_products (product_id, quantity, sale_id)
+//     VALUES (?, ?, (SELECT id FROM sales WHERE date = ?))`;
+//   const result = await connection.execute();
+// };
+
 module.exports = {
   getAll,
   getById,

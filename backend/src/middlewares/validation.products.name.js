@@ -9,4 +9,6 @@ const validateProductName = async (req, res, next) => {
   return next();
 };
 
-module.exports = validateProductName;
+module.exports = {
+  validateProductName,
+};

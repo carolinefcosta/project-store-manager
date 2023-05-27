@@ -6,7 +6,6 @@ const connection = require('../../../src/models/connection');
 const { productsModel } = require('../../../src/models');
 
 const { products, productId,
-  insertProduct, resultInsertProduct
 } = require('../mocks/products.mock');
 
 describe('Products Model', function () {

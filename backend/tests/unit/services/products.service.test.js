@@ -29,6 +29,9 @@ describe('Products Service', function () {
   });
 
   describe('Lista o produto pelo seu id, testando função getById()', function () {
+    afterEach(function () {
+      sinon.restore();
+    });
     it('retorna a pessoa passageira caso ID existente', async function () {
       sinon.stub(productsModel, 'getById').resolves(productId[0]);
       
@@ -38,13 +41,13 @@ describe('Products Service', function () {
       expect(result.message).to.deep.equal(productId[0]);
     });
 
-    // it('retorna um erro caso receba um ID inválido', async function () {
-    //   sinon.stub(productsModel, 'getById').resolves(products);
+    it('retorna um erro caso receba um ID inválido', async function () {
+      sinon.stub(productsModel, 'getById').resolves(undefined);
       
-    //   const result = await productsService.getById(999);
+      const result = await productsService.getById(999);
 
-    //   expect(result.type).to.equal(404);
-    //   expect(result.message).to.deep.equal('Product not found');
-    // });
+      expect(result.type).to.equal(404);
+      expect(result.message).to.deep.equal('Product not found');
+    });
   });
 });

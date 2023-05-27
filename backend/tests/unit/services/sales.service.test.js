@@ -43,7 +43,7 @@ describe('Sales Service', function () {
     });
 
     it('retorna um erro caso receba um ID inválido', async function () {
-      sinon.stub(salesModel, 'getById').resolves(undefined);
+      sinon.stub(salesModel, 'getById').resolves([]);
       
       const result = await salesService.getById(999);
 

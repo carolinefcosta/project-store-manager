@@ -22,21 +22,21 @@ describe('Sales Model', function () {
 
       expect(result).to.deep.equal(sales);
     });
-    
-    afterEach(function () {
-      sinon.restore();
-    });
   });
 
   describe('Lista a venda pelo seu id, testando função getById()', function () {
     const prodId = 1;
 
     it('Lista produto pelo id', async function () {
-      sinon.stub(connection, 'execute').resolves([[saleId]]);
+      sinon.stub(connection, 'execute').resolves([saleId]);
 
       const result = await salesModel.getById(prodId);
 
-      expect(result).to.deep.equal(saleId);
+      expect(result).to.be.deep.equal(saleId);
     });
+  });
+
+  afterEach(function () {
+    sinon.restore();
   });
 });

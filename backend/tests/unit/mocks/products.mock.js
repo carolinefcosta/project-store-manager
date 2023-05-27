@@ -23,8 +23,19 @@ const productIdObj = {
   name: 'Martelo de Thor',
 };
 
+const insertProduct = {
+  name: 'ProdutoX',
+};
+
+const resultInsertProduct = {
+  id: 1,
+  name: 'ProdutoX',
+};
+
 module.exports = {
   products,
   productId,
   productIdObj,
+  insertProduct,
+  resultInsertProduct,
 };

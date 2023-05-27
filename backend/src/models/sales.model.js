@@ -21,7 +21,8 @@ const getById = async (id) => {
       sp.quantity
       FROM sales s
       INNER JOIN sales_products sp
-      ON sp.sale_id = s.id AND sp.sale_id = ?
+      ON sp.sale_id = s.id
+      AND sp.sale_id = ?
       ORDER BY sp.sale_id, sp.product_id;`,
     [id],
   );

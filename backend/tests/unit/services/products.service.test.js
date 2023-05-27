@@ -5,7 +5,9 @@ const { productsModel } = require('../../../src/models');
 
 const { productsService } = require('../../../src/services');
 
-const { products, productId, resultInsertProduct, insertProduct } = require('../mocks/products.mock');
+const { products, productId,
+  resultInsertProduct, insertProduct,
+} = require('../mocks/products.mock');
 
 describe('Products Service', function () {
   describe('Lista todos os produtos, testando função getAll()', function () {

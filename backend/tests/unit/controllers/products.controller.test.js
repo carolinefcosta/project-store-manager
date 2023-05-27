@@ -10,7 +10,9 @@ const { productsController } = require('../../../src/controllers');
 
 const { productsService } = require('../../../src/services');
 
-const { products, productId, insertProduct, resultInsertProduct } = require('../mocks/products.mock');
+const { products, productId,
+  insertProduct, resultInsertProduct,
+} = require('../mocks/products.mock');
 
 describe('Products Controller', function () {
   describe('Lista todos os produtos, testando função getAll()', function () {

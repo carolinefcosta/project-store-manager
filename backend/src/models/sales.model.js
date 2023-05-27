@@ -29,17 +29,24 @@ const getById = async (id) => {
   return result;
 };
 
-// const insert = async () => {
-//   const query = 'INSERT INTO sales_products (product_id, quantity) VALUES (?, ?)';
+const insert = async (sale) => {
+  const timeElapsed = Date.now();
+  const today = new Date(timeElapsed);
+  const idSale = connection.execute('INSERT INTO sales (date) VALUES (?)', [today]);
 
-//   const [result] = await connection.execute(query, [product_id, quantity]);
-
-//   const query = `INSERT INTO sales_products (product_id, quantity, sale_id)
-//     VALUES (?, ?, (SELECT id FROM sales WHERE date = ?))`;
-//   const result = await connection.execute();
-// };
+  const saleProducts = sale.map(async (product) => {
+    await connection.execute(
+    `INSERT INTO sales_products
+    (product_id, quantity, sale_id) VALUES (?, ? ,?)`,
+    [product.product_id, product.quantity, idSale],
+);
+  });
+  await Promise.all(saleProducts);
+  return saleProducts;
+};
 
 module.exports = {
   getAll,
   getById,
+  insert,
 };

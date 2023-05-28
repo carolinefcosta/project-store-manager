@@ -23,9 +23,17 @@ const update = async (name, id) => {
   return { type: null, message: { id, name } };
 };
 
+const remove = async (id) => {
+  const product = await productsModel.getById(id);
+  if (!product) return { type: 404, message: 'Product not found' };
+  await productsModel.remove(id);
+  return { type: null };
+};
+
 module.exports = {
   getAll,
   getById,
   insert,
   update,
+  remove,
 };

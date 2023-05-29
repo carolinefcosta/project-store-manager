@@ -12,9 +12,7 @@ const getById = async (id) => {
 };
 
 const insert = async (sale) => {
-   // Auxilio do meu mentor Pablo e colega Allex;
-  // const products = await Promise.all(sale.map(({ productId }) => salesModel.getById(productId)));
-  // if (products.includes(undefined)) return { type: 404, message: 'Product not found' };
+   // Auxilio do meu mentor Pablo, colega Allex e Raphael;
   const newSale = await salesModel.insert(sale);
   return { type: null,
   message: {

@@ -1,52 +1,51 @@
-// Auxílio do colega Raphael;
 const sinon = require('sinon');
 const chai = require('chai');
 const sinonChai = require('sinon-chai');
 
-const { validateSaleProductId } = require('../../../src/middlewares/validation.sales.productId');
+const { ValidateSaleQuantity } = require('../../../src/middlewares/validation.sales.quantity');
 
 const { expect } = chai;
 chai.use(sinonChai);
 
-describe('Verificando middleware validateSaleProductId', function () {
+describe('Verificando middleware validateSaleQuantity', function () {
   beforeEach(sinon.restore);
 
-  describe('Tentando adicionar uma venda com o campo productId', function () {
+  describe('Tentando adicionar uma venda com o campo quantity', function () {
     it('é chamado o status 400 e o json com a mensagem correta', async function () {
       const res = {};
       const req = {
         body: [{
-          productI: 1,
+          quantit: 1,
         }],
       };
   
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
   
-      await validateSaleProductId(req, res);
+      await ValidateSaleQuantity(req, res);
   
       expect(res.status).to.have.been.calledOnceWith(400);
       expect(res.json).to.have.been.calledWith({
-         message: '"productId" is required',
+         message: '"quantity" is required',
       });
     });
 
-    it('é chamado o status 404 e o json com a msg correta', async function () {
+    it('é chamado o status 422 e o json com a msg correta', async function () {
       const res = {};
       const req = {
         body: [{
-          productId: 999,
+          quantity: 0,
         }],
       };
   
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
   
-      await validateSaleProductId(req, res);
+      await ValidateSaleQuantity(req, res);
   
-      expect(res.status).to.have.been.calledOnceWith(404);
+      expect(res.status).to.have.been.calledOnceWith(422);
       expect(res.json).to.have.been.calledWith({
-         message: 'Product not found',
+         message: '"quantity" must be greater than or equal to 1',
       });
     });
 
@@ -54,7 +53,7 @@ describe('Verificando middleware validateSaleProductId', function () {
       const res = {};
       const req = {
         body: [{
-          productId: 1,
+          quantity: 1,
         }],
       };
   
@@ -63,7 +62,7 @@ describe('Verificando middleware validateSaleProductId', function () {
 
       const next = sinon.stub().returns();
 
-      await validateSaleProductId(req, res, next);
+      await ValidateSaleQuantity(req, res, next);
   
       expect(next).to.have.been.calledOnceWith();
     });

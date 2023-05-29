@@ -19,27 +19,29 @@ describe('Middleware validateName', function () {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
 
-      await validateProductName(req, res);
+      const next = sinon.stub().returns();
+
+      await validateProductName(req, res, next);
 
       expect(res.status).to.have.been.calledOnceWith(400);
       expect(res.json).to.have.been.calledWith({ message: '"name" is required' });
     });
 
-    // it('não deve chamar o próximo middleware', async function () {
-    //   const res = {};
-    //   const req = {
-    //     body: {},
-    //   };
-    //   const next = sinon.stub().returns();
+    it('não deve chamar o próximo middleware', async function () {
+      const res = {};
+      const req = {
+        body: {},
+      };
+      const next = sinon.stub().returns();
 
-    //   res.status = sinon.stub().returns(res);
-    //   res.json = sinon.stub().returns();
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
 
-    //   await validateProductName(req, res, next);
+      await validateProductName(req, res, next);
 
-    //   // eslint-disable-next-line no-unused-expressions
-    //   // expect(next).to.have.not.been.called;
-    // });
+      // eslint-disable-next-line no-unused-expressions
+      expect(next).to.have.not.been.called;
+    });
 
     afterEach(function () {
       sinon.restore();
@@ -58,28 +60,31 @@ describe('Middleware validateName', function () {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
 
-      await validateProductName(req, res);
+      const next = sinon.stub().returns();
+
+      await validateProductName(req, res, next);
 
       expect(res.status).to.have.been.calledOnceWith(422);
       expect(res.json)
         .to.have.been.calledWith({ message: '"name" length must be at least 5 characters long' });
     });
 
-    // it('não deve chamar o próximo middleware', async function () {
-    //   const res = {};
-    //   const req = {
-    //     body: {},
-    //   };
-    //   const next = sinon.stub().returns();
+    it('não deve chamar o próximo middleware', async function () {
+      const res = {};
+      const req = {
+        body: {},
+      };
 
-    //   res.status = sinon.stub().returns(res);
-    //   res.json = sinon.stub().returns();
+      const next = sinon.stub().returns();
 
-    //   await validateProductName(req, res, next);
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
 
-    //   // eslint-disable-next-line no-unused-expressions
-    //   // expect(next).to.have.not.been.called;
-    // });
+      await validateProductName(req, res, next);
+
+      // eslint-disable-next-line no-unused-expressions
+      expect(next).to.have.not.been.called;
+    });
 
     afterEach(function () {
       sinon.restore();

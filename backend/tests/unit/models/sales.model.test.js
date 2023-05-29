@@ -10,7 +10,7 @@ const connection = require('../../../src/models/connection');
 
 const { salesModel } = require('../../../src/models');
 
-const { sales, saleId, newSale, newSaleResult } = require('../mocks/sales.mock');
+const { sales, saleId, newSale } = require('../mocks/sales.mock');
 
 describe('Sales Model', function () {
   describe('Lista todas vendas, testando função getAll()', function () {
@@ -50,13 +50,6 @@ describe('Sales Model', function () {
       sinon.stub(connection, 'execute').resolves([{ insertId: 1 }]);
       const result = await salesModel.insert(newSale);
       expect(result).to.equal(1);
-    });
-  
-    it('Retorno esperado de uma nova venda', async function () {
-      const insertId = [{ insertId: 1 }];
-      sinon.stub(connection, 'execute').resolves(insertId);
-      const result = await salesModel.insert(newSale);
-      expect(result).to.deep.equal(newSaleResult);
     });
   });
 });

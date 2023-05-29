@@ -13,13 +13,12 @@ const getById = async (req, res) => {
 };
 
 const insert = async (req, res) => {
+   // Auxilio do meu mentor Pablo e colega Allex;
   const saleProducts = req.body;
   const { type, message } = await salesService.insert(saleProducts);
-  if (!type) return res.status(404).json({ message: 'Product not found' });
-  return res.status(201).json({
-    id: message,
-    itemsSold: req.body,
-  });
+  if (!type) return res.status(201).json(message);
+ 
+  return res.status(type).json({ message });
 };
 
 module.exports = {

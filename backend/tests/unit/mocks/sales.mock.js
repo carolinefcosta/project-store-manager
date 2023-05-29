@@ -57,9 +57,14 @@ const newSaleResult = {
   ],
 };
 
+const saleProductsResult = { type: null,
+  message: newSaleResult,
+};
+
 module.exports = { 
   sales,
   saleId,
   newSale,
   newSaleResult,
+  saleProductsResult,
 };

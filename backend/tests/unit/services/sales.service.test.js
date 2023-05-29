@@ -53,6 +53,10 @@ describe('Sales Service', function () {
   });
 
   describe('Cadastrando uma nova venda, testando função insert()', function () {
+    afterEach(function () {
+      sinon.restore();
+    });
+
     it('Cadastrando uma nova venda', async function () {
       const insertId = [{ insertId: 1 }];
       sinon.stub(salesModel, 'insert').resolves(insertId);
@@ -62,9 +66,9 @@ describe('Sales Service', function () {
     });
   
     it('Retorno esperado de uma nova venda', async function () {
-      sinon.stub(salesModel, 'insert').resolves(newSaleResult);
-      const result = await salesModel.insert(newSale);
-      expect(result).to.equal(newSaleResult);
+      sinon.stub(salesModel, 'insert').resolves(1);
+      const result = await salesService.insert(newSale);
+      expect(result).to.deep.equal({ type: null, message: newSaleResult });
     });
   });
 });

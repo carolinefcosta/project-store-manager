@@ -7,13 +7,12 @@ const validateSaleProductId = async (req, res, next) => {
   const productIds = products.map((product) => product.id);
 
   const saleId = saleProducts.every((sale) => sale.productId !== undefined);
+  if (!saleId) return res.status(400).json({ message: '"productId" is required' });
 
   if (saleProducts.every((p) => p.productId > 0)
     && !saleProducts.every((p) => productIds
     .includes(p.productId))) return res.status(404).json({ message: 'Product not found' });
 
-  if (!saleId) return res.status(400).json({ message: '"productId" is required' });
-  
   return next();
 };
 

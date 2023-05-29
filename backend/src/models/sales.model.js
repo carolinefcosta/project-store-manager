@@ -30,9 +30,8 @@ const getById = async (id) => {
 };
 
 const insert = async (sale) => {
-  const timeElapsed = Date.now();
-  const today = new Date(timeElapsed);
-  const [{ insertId }] = await connection.execute('INSERT INTO sales (date) VALUES (?)', [today]);
+  // Auxilio do meu mentor Pablo e colega Allex;
+  const [{ insertId }] = await connection.execute('INSERT INTO sales () VALUES ()');
 
   const saleProducts = sale.map((product) => {
     const result = connection.execute(

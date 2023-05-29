@@ -10,7 +10,8 @@ const { salesController } = require('../../../src/controllers');
 
 const { salesService } = require('../../../src/services');
 
-const { saleId, sales, newSale, newSaleResult } = require('../mocks/sales.mock');
+const { saleId, sales, newSale,
+  newSaleResult, saleProductsResult } = require('../mocks/sales.mock');
 
 describe('Sales Controller', function () {
   describe('Lista todas as vendas, testando função getAll()', function () {
@@ -85,28 +86,18 @@ describe('Sales Controller', function () {
         params: {
           id: 1,
         },
-        body: {
-          newSale,
-        },
+        body: newSale,
       };
 
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
 
-      sinon.stub(salesService, 'insert').resolves(newSale);
+      sinon.stub(salesService, 'insert').resolves(saleProductsResult);
 
       await salesController.insert(req, res);
 
       expect(res.status).to.have.been.calledWith(201);
       expect(res.json).to.have.been.calledWith(newSaleResult);
     });
-  
-    // it('Retorno esperado de uma nova venda', async function () {
-    //   const execute = { insertId: 1 };
-
-    //   sinon.stub(connection, 'execute').resolves([execute]);
-    //   const result = await salesModel.insert(newSale);
-    //   expect(result).to.equal(newSaleResult);
-    // });
   });
 });

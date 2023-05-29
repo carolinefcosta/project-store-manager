@@ -5,7 +5,7 @@ const { salesModel } = require('../../../src/models');
 
 const { salesService } = require('../../../src/services');
 
-const { sales, saleId } = require('../mocks/sales.mock');
+const { sales, saleId, newSale, newSaleResult } = require('../mocks/sales.mock');
 
 describe('Sales Service', function () {
   describe('Lista todas as vendas, testando função getAll()', function () {
@@ -49,6 +49,22 @@ describe('Sales Service', function () {
 
       expect(result.type).to.equal(404);
       expect(result.message).to.deep.equal('Sale not found');
+    });
+  });
+
+  describe('Cadastrando uma nova venda, testando função insert()', function () {
+    it('Cadastrando uma nova venda', async function () {
+      const insertId = [{ insertId: 1 }];
+      sinon.stub(salesModel, 'insert').resolves(insertId);
+      const result = await salesModel.insert(newSale);
+
+      expect(result).to.deep.equal(insertId);
+    });
+  
+    it('Retorno esperado de uma nova venda', async function () {
+      sinon.stub(salesModel, 'insert').resolves(newSaleResult);
+      const result = await salesModel.insert(newSale);
+      expect(result).to.equal(newSaleResult);
     });
   });
 });

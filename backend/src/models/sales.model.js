@@ -30,7 +30,6 @@ const getById = async (id) => {
 };
 
 const insert = async (sale) => {
-  // Auxílio do meu mentor Pablo
   const timeElapsed = Date.now();
   const today = new Date(timeElapsed);
   const [{ insertId }] = await connection.execute('INSERT INTO sales (date) VALUES (?)', [today]);

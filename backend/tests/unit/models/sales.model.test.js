@@ -1,11 +1,16 @@
 const sinon = require('sinon');
-const { expect } = require('chai');
+const chai = require('chai');
+const sinonChai = require('sinon-chai');
+
+const { expect } = chai;
+
+chai.use(sinonChai);
 
 const connection = require('../../../src/models/connection');
 
 const { salesModel } = require('../../../src/models');
 
-const { sales, saleId } = require('../mocks/sales.mock');
+const { sales, saleId, newSale, newSaleResult } = require('../mocks/sales.mock');
 
 describe('Sales Model', function () {
   describe('Lista todas vendas, testando função getAll()', function () {
@@ -38,5 +43,20 @@ describe('Sales Model', function () {
 
   afterEach(function () {
     sinon.restore();
+  });
+
+  describe('Cadastrando uma nova venda, testando função insert()', function () {
+    it('Cadastrando uma nova venda', async function () {
+      sinon.stub(connection, 'execute').resolves([{ insertId: 1 }]);
+      const result = await salesModel.insert(newSale);
+      expect(result).to.equal(1);
+    });
+  
+    it('Retorno esperado de uma nova venda', async function () {
+      const insertId = [{ insertId: 1 }];
+      sinon.stub(connection, 'execute').resolves(insertId);
+      const result = await salesModel.insert(newSale);
+      expect(result).to.deep.equal(newSaleResult);
+    });
   });
 });

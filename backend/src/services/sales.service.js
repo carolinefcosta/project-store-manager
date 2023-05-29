@@ -12,8 +12,8 @@ const getById = async (id) => {
 };
 
 const insert = async (sale) => {
-  const newSale = salesModel.insert(sale);
-
+  const newSale = await salesModel.insert(sale);
+  if (!newSale) return { type: 404, message: 'Sale not found' };
   return { type: null, message: newSale };
 };
 
